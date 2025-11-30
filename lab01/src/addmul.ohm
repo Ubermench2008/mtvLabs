@@ -1,0 +1,17 @@
+AddMul {
+  Expr = Add
+
+  Add
+    = Add "+" Mul  -- plus
+    | Mul
+
+  Mul
+    = Mul "*" Pri  -- times
+    | Pri
+
+  Pri
+    = number
+    | "(" Expr ")"  -- paren
+
+  number = digit+   // используем встроенный digit
+}

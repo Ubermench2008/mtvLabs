@@ -1,0 +1,11 @@
+ReversePolishNotation {
+  Start = _ Item+ _
+
+  Item
+    = number
+    | "+"
+    | "*"
+
+  number = digit+
+  _ = space*
+}

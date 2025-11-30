@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out",
+    "rootDir": "src",
+    "target": "ES2018",
+    "module": "Preserve",
+    "lib": ["DOM", "ES2021"],
+    "paths": {
+      "@tvm/lab08": ["../lab08/out/index"],
+      "@tvm/lab09": ["../lab09/out/index"],
+      "@tvm/lab10": ["../lab10/out/index"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["out"],
+  "references": []
+}

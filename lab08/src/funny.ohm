@@ -1,0 +1,127 @@
+Arithmetic {
+  Additive
+    = Additive _ addOp _ Multiplicative  
+    | Multiplicative                    
+
+  addOp
+    = "+"
+    | "-"
+
+  Multiplicative
+    = Multiplicative _ mulOp _ Unary
+    | Unary
+
+  mulOp
+    = "*"
+    | "/"
+
+  Unary
+    = "-" _ Unary
+    | Primary
+
+  Primary
+    = number
+    | variable
+    | "(" _ Additive _ ")"
+
+  number = digit+
+
+  variable = letter alnum*
+
+  _ = spacing*
+
+  spacing
+    = " "
+    | "\t"
+    | "\n"
+}
+
+Funny <: Arithmetic {
+    Module
+        = _ FunctionDef+ _
+
+    FunctionDef
+        = identifier _ "(" _ ParameterList? _ ")" _
+          "returns" _ ParameterList _
+          FunctionLocals?
+          Statement
+
+    FunctionLocals
+        = "uses" _ ParameterList _
+
+    ParameterList
+        = ParameterDef _ "," _ ParameterList --many
+        | ParameterDef                       --one
+
+    ParameterDef
+        = identifier _ ":" _ Type
+
+    Type
+        = "int[]" --array
+        | "int"   --int
+
+    Statement
+        = Block        --block
+        | Assignment   --assign
+        | Conditional  --if
+        | While        --while
+
+    Block
+        = "{" _ Statement* _ "}"
+
+    Assignment
+        = AssignmentTargets _ "=" _ Expression _ ";"
+
+    AssignmentTargets
+        = identifier _ "," _ AssignmentTargets --many
+        | identifier                           --one
+
+    Conditional
+        = "if" _ "(" _ Condition _ ")" _ Statement _ ElseClause?
+
+    ElseClause
+        = "else" _ Statement
+
+    While
+        = "while" _ "(" _ Condition _ ")" _ Statement
+
+    Condition
+        = "true"                   --true
+        | "false"                  --false
+        | "not" _ Condition        --not
+        | Condition _ "and" _ Condition --and
+        | Condition _ "or" _ Condition  --or
+        | "(" _ Condition _ ")"    --paren
+        | Comparison               --comparison
+
+    Comparison
+        = Expression _ CompareOp _ Expression
+
+    CompareOp
+        = "==" --eq
+        | "!=" --ne
+        | ">=" --ge
+        | "<=" --le
+        | ">"  --gt
+        | "<"  --lt
+
+    Expression
+        = FunctionCall --call
+        | Additive     --arith
+
+    FunctionCall
+        = identifier _ "(" _ ArgumentList? _ ")"
+
+    ArgumentList
+        = Expression _ "," _ ArgumentList --many
+        | Expression                      --one
+
+    Primary += FunctionCall --call
+
+    identifier = letter alnum*
+
+    spacing += comment
+
+    comment
+        = "//" (~"\n" any)* ("\n" | end)
+}

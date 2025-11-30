@@ -1,0 +1,41 @@
+Arithmetic {
+  Additive
+    = Multiplicative AdditiveTail*
+
+  AdditiveTail
+    = _ addOp _ Multiplicative
+
+  addOp
+    = "+"
+    | "-"
+
+  Multiplicative
+    = Unary MultiplicativeTail*
+
+  MultiplicativeTail
+    = _ mulOp _ Unary
+
+  mulOp
+    = "*"
+    | "/"
+
+  Unary
+    = "-" _ Unary  -- neg
+    | Primary      -- base
+
+  Primary
+    = number                 -- number
+    | variable               -- variable
+    | "(" _ Additive _ ")"   -- paren
+
+  number = digit+
+
+  variable = letter alnum*
+
+  _ = spacing*
+
+  spacing
+    = " "
+    | "\t"
+    | "\n"
+}

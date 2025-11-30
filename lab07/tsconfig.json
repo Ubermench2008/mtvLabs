@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out",
+    "rootDir": "src",
+    "target": "ES2018",
+  },
+  "include": ["src"],
+  "exclude": ["out"],
+  "references": [
+    {"path": "../lab04"},
+    {"path": "../mark"}
+  ]
+}

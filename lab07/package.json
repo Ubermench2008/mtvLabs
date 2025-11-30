@@ -1,0 +1,25 @@
+{
+    "name": "@tvm/lab07",
+    "version": "1.0.0",
+    "description": "",
+    "main": "out/index.js",
+    "type": "commonjs",
+    "files": [
+        "out/**/*.js",
+        "out/**/*.d.ts"
+    ],
+    "scripts": {
+        "build": "tsc --build",
+    "test": "pnpm build && pnpm jest --config ./jest.config.cjs --runInBand"
+    },
+    "devDependencies": {
+        "@tvm/mark": "workspace:*"       
+    },
+    "dependencies": {
+        "@tvm/lab04": "workspace:1.0.0"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "jest":{}
+}
