@@ -1,4 +1,4 @@
-import { BinaryOperator } from "../../lab04";
+import { BinaryOperator } from '../../lab04';
 
 export interface SourceLocation {
     startLine: number;
