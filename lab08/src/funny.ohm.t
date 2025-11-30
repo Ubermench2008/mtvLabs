@@ -36,8 +36,12 @@ Funny <: Arithmetic {
         = AssignmentTargets _ "=" _ Expression _ ";"
 
     AssignmentTargets
-        = identifier _ "," _ AssignmentTargets --many
-        | identifier                           --one
+        = AssignmentTarget _ "," _ AssignmentTargets --many
+        | AssignmentTarget                       --one
+
+    AssignmentTarget
+        = identifier _ "[" _ Expression _ "]" --array
+        | identifier                            --identifier
 
     Conditional
         = "if" _ "(" _ Condition _ ")" _ Statement _ ElseClause?
@@ -79,7 +83,12 @@ Funny <: Arithmetic {
         = Expression _ "," _ ArgumentList --many
         | Expression                      --one
 
-    Primary += FunctionCall --call
+    Primary :=
+        FunctionCall                              --call
+        | identifier _ "[" _ Expression _ "]"    --arrayAccess
+        | number                                  --number
+        | variable                                --variable
+        | "(" _ Additive _ ")"                   --paren
 
     identifier = letter alnum*
 
